@@ -61,3 +61,19 @@ server.get("/api/users/:id", (req, res) => {
         .send({ error: "The users information could not be retrieved." })
     );
 });
+
+server.delete("/api/users/:id", (req, res) => {
+  const { id } = req.params;
+  db.remove(id)
+    .then(response => {
+      if (response === 0) {
+        res
+          .status(404)
+          .json({ message: "The user with the specified ID does not exist." });
+      }
+      res.status(201).json(`${id} removed`);
+    })
+    .catch(err =>
+      res.status(500).json({ error: "The user could not be removed" })
+    );
+});
