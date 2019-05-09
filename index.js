@@ -15,7 +15,7 @@ server.get("/", (req, res) => {
 server.get("/api/users", (req, res) => {
   db.find()
     .then(users => {
-      res.send(users);
+      res.json(users);
     })
-    .catch(err => console.log(err));
+    .catch(err => res.status(500).send(err));
 });
